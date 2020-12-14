@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DummrenTool - Words Generator</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script>
+			var words = [];
+			
+			function Start(){
+				if(localStorage.getItem("words_generator/words") == null){
+					localStorage.setItem("words_generator/words", "[]");
+				}
+				words = JSON.parse(localStorage.getItem("words_generator/words"));
+				RefreshWords();
+			}
+			
+			function Generate(){
+				var _v = "";
+				for(var _vv = 0; _vv < document.getElementById("wordsCount").value; _vv++){
+					_v += words[Math.floor(Math.random() * (0 -  (words.length)) + (words.length))] + " ";
+				}
+				document.getElementById("result").innerHTML = _v;
+			}
+			
+			function RemoveWord(_index){
+				words.splice(_index, 1);
+				localStorage.setItem("words_generator/words", JSON.stringify(words));
+				RefreshWords();
+			}
+			
+			function AddWord(){
+				if(document.getElementById("newWord").value.replace(new RegExp(" ", "g"), "") == ""){
+					alert("Word can't be empty!");
+				}
+				else{
+					if(words.indexOf(document.getElementById("newWord").value) > -1){
+						alert("This word already exists in dictionary!");
+					}
+					else{
+						words.push(document.getElementById("newWord").value);
+						localStorage.setItem("words_generator/words", JSON.stringify(words));
+						RefreshWords();
+						document.getElementById("newWord").value = "";
+					}
+				}
+			}
+			
+			function RefreshWords(){
+				document.getElementById("wordsDiv").innerHTML = "";
+				for(var _v = 0; _v < words.length; _v++){
+					document.getElementById("wordsDiv").innerHTML += '<h3>' + words[_v] + '<span style="color: red; font-weight: bold" onclick="setTimeout(function(){RemoveWord(' + _v + ')}, 0)"> REMOVE</span></h3>';
+				}
+			}
+		</script>
+		<link rel="stylesheet" href="global.css">
+	</head>
+	<body onload="Start()" align="center">
+		<div class="header" onclick="window.location = 'index.html'">
+			<h1><</h1>
+			<h1>Words Generator</h1>
+		</div>
+		<div class="div-body" align="center">
+			<h2>Result</h2>
+			<h3 class="scrolling-text-100procent-300px" id="result">Please generate words</h3>
+			<input onclick="Generate()" type="button" class="button-1" value="Generate">
+			<hr width="50%">
+			<h2>Options</h2>
+			<h3>Words count: <input id="wordsCount" class="input-1" type="number" value="0"></h3>
+			<hr width="50%">
+			<h2>Dictionary</h2>
+			<input id="newWord" class="input-2" type="text" placeholder="Enter word" value="">
+			<input onclick="AddWord()" class="button-2" type="button" value="Add">
+			<div id="wordsDiv" align="center">
+				
+			</div>
+		</div>
+	</body>
+</html>
