@@ -76,10 +76,10 @@
 				if(_how == "copy"){
 					if(navigator.clipboard){
 						if((window.location + "").indexOf("?") > -1){
-							navigator.clipboard.writeText((window.location + "").substring(0, (window.location + "").indexOf("?")) + "?share=" + document.getElementById("result").innerHTML);
+							navigator.clipboard.writeText(uncodeURI((window.location + "").substring(0, (window.location + "").indexOf("?")) + "?share=" + document.getElementById("result").innerHTML));
 						}
 						else{
-							navigator.clipboard.writeText(window.location + "?share=" + document.getElementById("result").innerHTML);
+							navigator.clipboard.writeText(uncodeURI(window.location + "?share=" + document.getElementById("result").innerHTML));
 						}
 					}
 					else{
