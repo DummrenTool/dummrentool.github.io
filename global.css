@@ -34,7 +34,7 @@ h3{
 }
 
 .header{
-	width: 100%;
+	width: 100vw;
 	height: 50px;
 	display: flex;
 	line-height: 50px;
